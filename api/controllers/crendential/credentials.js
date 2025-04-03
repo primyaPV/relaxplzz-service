@@ -1,79 +1,59 @@
-const db = require('../../../utils/mysql');
-const addressService = require('../../Services/AddressServices')
+const addressService = require('../../Services/AddressServices');
 
-exports.postAddress = (req, res) => {
+// POST Address (Add new address)
+exports.postAddress = async(req, res) => {
     console.log("Address endpoint hit");
-
 
     const { street, building, road, area, city, state, zip, contact, link } = req.body;
 
-    const sql = `INSERT INTO address (street, building, road, area, city, state, zip, contact, link) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-    db.query(sql, [street, building, road, area, city, state, zip, contact, link], (err, result) => {
-        if (err) {
-            console.error("Error inserting data: ", err);
-            return res.status(500).json({ message: "Error inserting data", error: err });
-        }
-
-        res.status(200).json({ message: "Address added successfully", insertId: result.insertId });
-    });
+    try {
+        const result = await addressService.addAddress(street, building, road, area, city, state, zip, contact, link);
+        res.status(200).json(result); // Successfully added
+    } catch (err) {
+        console.error("Error inserting data: ", err);
+        res.status(500).json({ message: "Error inserting data", error: err });
+    }
 };
 
-//get address
+// GET Address (Get all addresses)
 exports.getAddress = async(req, res) => {
     try {
         const data = await addressService.getAllAddress();
         console.log("data..", data);
-        res.json(data); 
+        res.json(data); // Successfully fetched
     } catch (err) {
-        res.status(500).json({ err }); 
+        console.error("Error fetching data: ", err);
+        res.status(500).json({ message: "Error fetching data", error: err });
     }
 };
 
-//update Address
-exports.updateAddress = (req, res) => {
+// PUT Address (Update address by ID)
+exports.updateAddress = async(req, res) => {
     console.log("Address PUT endpoint hit");
 
     const id = req.params.id;
-
     const { street, building, road, area, city, state, zip, contact, link } = req.body;
 
-    const sql = `UPDATE address
-                 SET street = ?, building = ?, road = ?, area = ?, city = ?, state = ?, zip = ?, contact = ?, link = ?
-                 WHERE id = ?`;
-
-    db.query(sql, [street, building, road, area, city, state, zip, contact, link, id], (err, result) => {
-        if (err) {
-            console.error("Error updating data: ", err);
-            return res.status(500).json({ message: "Error updating data", error: err });
-        }
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: `Address with ID ${id} not found` });
-        }
-
-        res.status(200).json({ message: "Address updated successfully" });
-    });
+    try {
+        const result = await addressService.updateAddress(id, street, building, road, area, city, state, zip, contact, link);
+        res.status(200).json(result); // Successfully updated
+    } catch (err) {
+        console.error("Error updating data: ", err);
+        res.status(500).json({ message: "Error updating data", error: err });
+    }
 };
-//Delete Address
-exports.deleteAddress = (req, res) => {
+
+// DELETE Address (Delete address by ID)
+exports.deleteAddress = async(req, res) => {
     console.log("Address DELETE endpoint hit");
 
     const id = req.params.id;
 
-    const sql = `DELETE FROM address WHERE id = ?`;
-
-    db.query(sql, [id], (err, result) => {
-        if (err) {
-            console.error("Error deleting data: ", err);
-            return res.status(500).json({ message: "Error deleting data", error: err });
-        }
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: `Address with ID ${id} not found` });
-        }
-
-        res.status(200).json({ message: `Address with ID ${id} deleted successfully` });
-    });
+    try {
+        const result = await addressService.deleteAddress(id);
+        res.status(200).json(result); // Successfully deleted
+    } catch (err) {
+        console.error("Error deleting data: ", err);
+        res.status(500).json({ message: "Error deleting data", error: err });
+    }
 };
