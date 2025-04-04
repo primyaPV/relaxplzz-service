@@ -1,6 +1,5 @@
 const db = require('../../utils/mysql');
 
-// Service to add a new gallery item
 exports.addGalleryItem = (mediaType, url) => {
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO gallery (mediaType, url) VALUES (?, ?)`;
@@ -14,7 +13,6 @@ exports.addGalleryItem = (mediaType, url) => {
     });
 };
 
-// Service to update an existing gallery item
 exports.updateGalleryItem = (id, mediaType, url) => {
     return new Promise((resolve, reject) => {
         const sql = `UPDATE gallery SET mediaType = ?, url = ? WHERE id = ?`;
@@ -29,7 +27,6 @@ exports.updateGalleryItem = (id, mediaType, url) => {
     });
 };
 
-// Service to delete a gallery item by ID
 exports.deleteGalleryItem = (id) => {
     return new Promise((resolve, reject) => {
         const sql = `DELETE FROM gallery WHERE id = ?`;

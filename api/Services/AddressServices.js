@@ -1,6 +1,5 @@
 const db = require('../../utils/mysql');
 
-// Service to insert a new address
 exports.addAddress = (street, building, road, area, city, state, zip, contact, link) => {
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO address (street, building, road, area, city, state, zip, contact, link) 
@@ -15,7 +14,6 @@ exports.addAddress = (street, building, road, area, city, state, zip, contact, l
     });
 };
 
-// Service to get all addresses
 exports.getAllAddress = () => {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT * FROM address';
@@ -28,7 +26,6 @@ exports.getAllAddress = () => {
     });
 };
 
-// Service to update an address
 exports.updateAddress = (id, street, building, road, area, city, state, zip, contact, link) => {
     return new Promise((resolve, reject) => {
         const sql = `UPDATE address
@@ -49,7 +46,6 @@ exports.updateAddress = (id, street, building, road, area, city, state, zip, con
     });
 };
 
-// Service to delete an address
 exports.deleteAddress = (id) => {
     return new Promise((resolve, reject) => {
         const sql = `DELETE FROM address WHERE id = ?`;

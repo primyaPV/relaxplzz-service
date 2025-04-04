@@ -1,6 +1,5 @@
 const db = require('../../utils/mysql');
 
-// Service to create a new banner
 exports.createBanner = (headline, subheading, purpose, example) => {
     return new Promise((resolve, reject) => {
         const query = 'INSERT INTO banners (headline, subheading, purpose, example) VALUES (?, ?, ?, ?)';
@@ -14,7 +13,6 @@ exports.createBanner = (headline, subheading, purpose, example) => {
     });
 };
 
-// Service to update an existing banner
 exports.updateBanner = (bannerId, headline, subheading, purpose, example) => {
     return new Promise((resolve, reject) => {
         const query = `
@@ -37,7 +35,6 @@ exports.updateBanner = (bannerId, headline, subheading, purpose, example) => {
     });
 };
 
-// Service to delete a banner by ID
 exports.deleteBanner = (bannerId) => {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM banners WHERE id = ?';

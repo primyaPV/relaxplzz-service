@@ -1,6 +1,5 @@
 const addressService = require('../../Services/AddressServices');
 
-// POST Address (Add new address)
 exports.postAddress = async(req, res) => {
     console.log("Address endpoint hit");
 
@@ -15,19 +14,17 @@ exports.postAddress = async(req, res) => {
     }
 };
 
-// GET Address (Get all addresses)
 exports.getAddress = async(req, res) => {
     try {
         const data = await addressService.getAllAddress();
         console.log("data..", data);
-        res.json(data); // Successfully fetched
+        res.json(data);
     } catch (err) {
         console.error("Error fetching data: ", err);
         res.status(500).json({ message: "Error fetching data", error: err });
     }
 };
 
-// PUT Address (Update address by ID)
 exports.updateAddress = async(req, res) => {
     console.log("Address PUT endpoint hit");
 
@@ -43,7 +40,6 @@ exports.updateAddress = async(req, res) => {
     }
 };
 
-// DELETE Address (Delete address by ID)
 exports.deleteAddress = async(req, res) => {
     console.log("Address DELETE endpoint hit");
 
@@ -51,7 +47,7 @@ exports.deleteAddress = async(req, res) => {
 
     try {
         const result = await addressService.deleteAddress(id);
-        res.status(200).json(result); // Successfully deleted
+        res.status(200).json(result);
     } catch (err) {
         console.error("Error deleting data: ", err);
         res.status(500).json({ message: "Error deleting data", error: err });

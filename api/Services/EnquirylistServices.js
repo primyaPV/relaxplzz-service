@@ -1,6 +1,5 @@
 const db = require('../../utils/mysql');
 
-// Service to create a new enquiry
 exports.createEnquiry = (Name, Email, PhoneNumber, Subject, Message) => {
     return new Promise((resolve, reject) => {
         const query = `INSERT INTO enquirylist (Name, Email, PhoneNumber, Subject, Message) 
@@ -15,7 +14,6 @@ exports.createEnquiry = (Name, Email, PhoneNumber, Subject, Message) => {
     });
 };
 
-// Service to update an existing enquiry
 exports.updateEnquiry = (id, Name, Email, PhoneNumber, Subject, Message) => {
     return new Promise((resolve, reject) => {
         const query = `UPDATE enquirylist 
@@ -36,7 +34,6 @@ exports.updateEnquiry = (id, Name, Email, PhoneNumber, Subject, Message) => {
     });
 };
 
-// Service to delete an enquiry by ID
 exports.deleteEnquiry = (id) => {
     return new Promise((resolve, reject) => {
         const query = `DELETE FROM enquirylist WHERE id = ?`;
